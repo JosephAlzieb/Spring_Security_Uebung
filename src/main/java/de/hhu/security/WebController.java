@@ -17,12 +17,15 @@ import java.util.Map;
 public class WebController {
 
     @GetMapping("/")
-    public String getIndex(Model model){
+    public String getIndex(Model model, @AuthenticationPrincipal OAuth2User userObject) {
+//        model.addAttribute("user",
+//                userObject != null ? userObject.getAttribute("login") : null
+//        );
         return "index";
     }
 
     @GetMapping("/home")
-    public String getHomePage(){
+    public String getHomePage() {
         return "home";
     }
 
