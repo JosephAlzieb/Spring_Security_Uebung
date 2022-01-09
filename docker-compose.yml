@@ -1,0 +1,7 @@
+version: "3.1"
+services:
+  application:
+    # Konfiguration der Anwendung
+    environment:
+      - "CLIENT_ID=${CLIENT_ID}"
+      - "CLIENT_SECRET=${CLIENT_SECRET}"
