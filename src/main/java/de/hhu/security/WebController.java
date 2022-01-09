@@ -1,6 +1,9 @@
 package de.hhu.security;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,5 +30,12 @@ public class WebController {
     @ResponseBody
     public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
         return principal.getAttributes();
+    }
+
+    @GetMapping("/tokeninfo")
+    @ResponseBody
+    public Map<String, Object> tokeninfo(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
+        OAuth2AccessToken gitHubAccessToken = authorizedClient.getAccessToken();
+        return Map.of("token", gitHubAccessToken);
     }
 }
