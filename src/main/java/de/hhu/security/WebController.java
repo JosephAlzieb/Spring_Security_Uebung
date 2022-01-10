@@ -1,5 +1,6 @@
 package de.hhu.security;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
@@ -40,5 +41,14 @@ public class WebController {
     public Map<String, Object> tokeninfo(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) {
         OAuth2AccessToken gitHubAccessToken = authorizedClient.getAccessToken();
         return Map.of("token", gitHubAccessToken);
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/admin")
+    public String admin(Model model, @AuthenticationPrincipal OAuth2User principal) {
+        model.addAttribute("user",
+                principal != null ? principal.getAttribute("login") : null
+        );
+        return "admin";
     }
 }
